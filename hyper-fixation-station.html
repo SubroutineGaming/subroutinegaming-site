@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hyper Fixation Station: Pixel — Progression Crafting Game | Subroutine Gaming</title>
+  <meta name="description" content="Hyper Fixation Station: Pixel is a progression and crafting game. Start with scrap on the curb. End with a self-replicating probe. Six phases of escalating obsession. In development by Subroutine Gaming." />
+  <link rel="canonical" href="https://subroutinegaming.com/hyper-fixation-station.html" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .game-hero { padding: 60px 0 50px; position: relative; }
+
+    .game-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .breadcrumb a { color: var(--neon); }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb .sep { margin: 0 8px; opacity: 0.4; }
+
+    .game-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--neon);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .game-eyebrow::before { content: '[ '; }
+    .game-eyebrow::after  { content: ' ]'; }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 0 0 4px;
+      color: #ffffff;
+    }
+
+    .h1-sub {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #4fc3e8;
+      margin-bottom: 18px;
+    }
+
+    .game-tagline-large {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--neon);
+      margin-bottom: 18px;
+      letter-spacing: 0.02em;
+    }
+
+    .game-desc-long {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      max-width: 60ch;
+    }
+
+    .chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+
+    /* TITLE SCREEN FRAME */
+    .title-frame {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .title-frame::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, rgba(127,211,107,0.3), transparent, rgba(79,195,232,0.25)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .title-frame img {
+      width: 100%;
+      display: block;
+    }
+
+    /* PHASES LIST */
+    .phases-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+
+    .phase-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .phase-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--neon);
+      opacity: 0.5;
+      min-width: 32px;
+      padding-top: 2px;
+      letter-spacing: 0.1em;
+    }
+
+    .phase-text {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .phase-text strong { color: var(--text); font-weight: 600; }
+
+    /* DETAIL GRID */
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-block {
+      padding: 22px 24px 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* OTHER GAMES */
+    .other-games { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .other-game-card {
+      flex: 1;
+      min-width: 200px;
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .other-game-card:hover {
+      border-color: var(--border-bright);
+      box-shadow: 0 0 24px rgba(127, 211, 107, 0.06);
+    }
+
+    .other-game-thumb {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 3px;
+      margin-bottom: 12px;
+      filter: saturate(0.7);
+      transition: filter 0.2s;
+    }
+
+    .other-game-card:hover .other-game-thumb { filter: saturate(0.95); }
+
+    .other-game-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .other-game-sub {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 900px) {
+      .game-hero-grid { grid-template-columns: 1fr; }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="img/logo.png" alt="Subroutine Gaming logo" width="36" height="36" />
+      <span>Subroutine <span style="opacity:0.6">Gaming</span></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html#games"><span>Games</span></a>
+      <a href="index.html#universe"><span>Universe</span></a>
+      <a href="index.html#music"><span>Music</span></a>
+      <a href="index.html#about"><span>Manifesto</span></a>
+      <a href="index.html#contact"><span>Contact</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="game-hero wrap">
+    <div class="breadcrumb">
+      <a href="index.html">SubroutineGaming.com</a>
+      <span class="sep">/</span>
+      <a href="index.html#games">Games</a>
+      <span class="sep">/</span>
+      Hyper Fixation Station: Pixel
+    </div>
+
+    <div class="game-hero-grid">
+      <div>
+        <div class="game-eyebrow">Progression · Crafting · Pixel · PC</div>
+        <h1>Hyper Fixation Station</h1>
+        <div class="h1-sub">:Pixel</div>
+        <div class="game-tagline-large">Start with scrap. End with a self-replicating probe.</div>
+        <div class="game-status wip" style="margin-bottom:20px;">
+          <span class="game-status-dot"></span>
+          In Development
+        </div>
+        <p class="game-desc-long">You found a bag of scrap on the curb. One workbench in your garage. No money. No plan — just the itch to build something.</p>
+        <p class="game-desc-long">Six phases of escalating obsession later, you're launching a self-replicating probe with a copy of your mind onboard. How you get there is the game.</p>
+        <div class="chip-row">
+          <span class="chip highlight">Coming soon</span>
+          <span class="chip">Progression</span>
+          <span class="chip">Crafting</span>
+          <span class="chip">Pixel Art</span>
+          <span class="chip">PC</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="title-frame">
+          <img src="img/hyper-fixation-title.jpg"
+               alt="Hyper Fixation Station: Pixel — title screen. White text on black reads HYPER FIXATION STATION, with :PIXEL in spaced cyan letters beneath."
+               width="840" height="560"
+               style="width:100%; height:auto; display:block;" />
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIX PHASES -->
+  <section class="section wrap">
+    <div class="section-label">The Arc</div>
+    <h2>Six Phases</h2>
+    <div class="phases-list">
+      <div class="phase-item">
+        <span class="phase-num">01</span>
+        <span class="phase-text"><strong>The Curb Find.</strong> A bag of junk. A workbench. Figure out what you have.</span>
+      </div>
+      <div class="phase-item">
+        <span class="phase-num">02</span>
+        <span class="phase-text"><strong>The Workshop.</strong> Build things. Break them. Build better things. Acquire more junk.</span>
+      </div>
+      <div class="phase-item">
+        <span class="phase-num">03</span>
+        <span class="phase-text"><strong>The System.</strong> What started as a hobby is now a process. Automate. Optimize. Expand.</span>
+      </div>
+      <div class="phase-item">
+        <span class="phase-num">04</span>
+        <span class="phase-text"><strong>The Obsession.</strong> The neighbors are concerned. You are not.</span>
+      </div>
+      <div class="phase-item">
+        <span class="phase-num">05</span>
+        <span class="phase-text"><strong>The Breakthrough.</strong> Something impossible becomes possible. The scope changes.</span>
+      </div>
+      <div class="phase-item">
+        <span class="phase-num">06</span>
+        <span class="phase-text"><strong>The Launch.</strong> Self-replicating probe. Copy of your mind. Everything you built for this moment.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="section wrap">
+    <div class="section-label">Game Details</div>
+    <h2>About the Game</h2>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <div class="detail-label">Genre</div>
+        <div class="detail-value">Progression / Crafting</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Platform</div>
+        <div class="detail-value">PC (Windows)</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Art Style</div>
+        <div class="detail-value">Pixel Art</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Developer</div>
+        <div class="detail-value">Subroutine Gaming LLC</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Distribution</div>
+        <div class="detail-value">Steam (coming)</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Status</div>
+        <div class="detail-value">In Active Development</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER GAMES -->
+  <section class="section wrap">
+    <div class="section-label">More from Subroutine Gaming</div>
+    <h2>Other Games</h2>
+    <div class="other-games">
+      <a class="other-game-card" href="corporate-entropy.html">
+        <img class="other-game-thumb" src="img/corporate-entropy-art.jpg"
+             alt="Corporate Entropy" loading="lazy" />
+        <div class="other-game-title">Corporate Entropy</div>
+        <div class="other-game-sub">Strategy / Satire · In Development</div>
+      </a>
+      <a class="other-game-card" href="oil.html">
+        <img class="other-game-thumb" src="img/oil-console.jpg"
+             alt="OIL" loading="lazy" />
+        <div class="other-game-title">OIL</div>
+        <div class="other-game-sub">Command-line resource sim · Playable</div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="footer-brand">Subroutine Gaming</div>
+      <div class="footer-tagline">Code · Build · Evolve</div>
+      <div style="margin-top:12px;"><a href="mailto:support@subroutinegaming.com" style="font-family:var(--font-mono);font-size:0.82rem;color:var(--neon);letter-spacing:0.08em;text-decoration:none;opacity:0.85;">support@subroutinegaming.com</a></div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-url">SubroutineGaming.com</div>
+      <div class="footer-copy">© 2026 Subroutine Gaming LLC. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

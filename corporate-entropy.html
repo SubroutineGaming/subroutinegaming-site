@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corporate Entropy — Satirical Strategy Sim | Subroutine Gaming</title>
+  <meta name="description" content="Corporate Entropy is a satirical strategy simulation about managing impossible expectations and navigating increasingly absurd workplace systems. In development for PC. Original soundtrack now streaming on Spotify and Amazon Music." />
+  <link rel="canonical" href="https://subroutinegaming.com/corporate-entropy.html" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── GAME PAGE SHARED ── */
+    .game-hero { padding: 60px 0 50px; position: relative; }
+
+    .game-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .breadcrumb a { color: var(--neon); }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb .sep { margin: 0 8px; opacity: 0.4; }
+
+    .game-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--neon);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .game-eyebrow::before { content: '[ '; }
+    .game-eyebrow::after  { content: ' ]'; }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+      color: #ffffff;
+    }
+
+    .game-tagline-large {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--neon);
+      margin-bottom: 18px;
+      letter-spacing: 0.02em;
+    }
+
+    .game-desc-long {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 28px;
+      max-width: 60ch;
+    }
+
+    .chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+
+    /* KEY ART */
+    .key-art-frame {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #060c16;
+      aspect-ratio: 4 / 3;
+    }
+
+    .key-art-frame::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, rgba(127,211,107,0.4), transparent, rgba(0,255,136,0.2)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .key-art-frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: saturate(0.9) contrast(1.05);
+    }
+
+    /* OST CALLOUT */
+    .ost-callout {
+      margin-top: 16px;
+      padding: 16px 20px;
+      background: rgba(10, 16, 10, 0.9);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .ost-callout-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--neon);
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+
+    .ost-callout-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .ost-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .ost-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .ost-link.spotify { color: #1DB954; border-color: rgba(29,185,84,0.4); }
+    .ost-link.spotify:hover { background: rgba(29,185,84,0.1); border-color: #1DB954; transform: translateY(-1px); }
+    .ost-link.amazon  { color: #FF9900; border-color: rgba(255,153,0,0.4); }
+    .ost-link.amazon:hover  { background: rgba(255,153,0,0.1); border-color: #FF9900; transform: translateY(-1px); }
+
+    /* DETAIL GRID */
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-block {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      padding-right: 24px;
+    }
+
+    .detail-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* OTHER GAMES */
+    .other-games { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .other-game-card {
+      flex: 1;
+      min-width: 200px;
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .other-game-card:hover {
+      border-color: var(--border-bright);
+      box-shadow: 0 0 24px rgba(127, 211, 107, 0.06);
+    }
+
+    .other-game-thumb {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 3px;
+      margin-bottom: 12px;
+      filter: saturate(0.7);
+      transition: filter 0.2s;
+    }
+
+    .other-game-card:hover .other-game-thumb { filter: saturate(0.95); }
+
+    .other-game-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .other-game-sub {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .game-hero-grid { grid-template-columns: 1fr; }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="img/logo.png" alt="Subroutine Gaming logo" width="36" height="36" />
+      <span>Subroutine <span style="opacity:0.6">Gaming</span></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html#games"><span>Games</span></a>
+      <a href="index.html#universe"><span>Universe</span></a>
+      <a href="index.html#music"><span>Music</span></a>
+      <a href="index.html#about"><span>Manifesto</span></a>
+      <a href="index.html#contact"><span>Contact</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="game-hero wrap">
+    <div class="breadcrumb">
+      <a href="index.html">SubroutineGaming.com</a>
+      <span class="sep">/</span>
+      <a href="index.html#games">Games</a>
+      <span class="sep">/</span>
+      Corporate Entropy
+    </div>
+
+    <div class="game-hero-grid">
+      <div>
+        <div class="game-eyebrow">Strategy · Simulation · Satire · PC</div>
+        <h1>Corporate Entropy</h1>
+        <div class="game-tagline-large">Survive the machine by becoming part of it.</div>
+        <div class="game-status soon" style="margin-bottom:20px;">
+          <span class="game-status-dot"></span>
+          In Development
+        </div>
+        <p class="game-desc-long">A satirical strategy simulation about managing impossible expectations and navigating increasingly absurd workplace systems. Build your department. Game every metric. Absorb the blame. Keep the corporate engine running just long enough to avoid being consumed by it.</p>
+        <p class="game-desc-long">Every system you master will be changed. Every rule you learn will be reversed. The goal is not to win — it is to last.</p>
+        <div class="chip-row">
+          <span class="chip highlight">Steam page coming</span>
+          <span class="chip">Strategy</span>
+          <span class="chip">Satire</span>
+          <span class="chip">Management Sim</span>
+          <span class="chip">PC</span>
+          <span class="chip">Godot</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="key-art-frame">
+          <img src="img/corporate-entropy-art.jpg"
+               alt="Corporate Entropy — a massive glowing neural processing sphere suspended from the ceiling of a brutalist open-plan office. Red warning lights line the walls. Workstations stand empty."
+               width="900" height="900" />
+        </div>
+        <div class="ost-callout">
+          <div class="ost-callout-label">Original Soundtrack — Now Streaming</div>
+          <div class="ost-callout-title">Corporate Entropy OST · 29 Tracks</div>
+          <div class="ost-links">
+            <a class="ost-link spotify"
+               href="https://open.spotify.com/album/7j0kpa7R0iMvcZ9ocwBJDZ"
+               target="_blank" rel="noopener noreferrer">▶ Spotify</a>
+            <a class="ost-link amazon"
+               href="https://music.amazon.com/albums/B0GV9MK17N"
+               target="_blank" rel="noopener noreferrer">▶ Amazon Music</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="section wrap">
+    <div class="section-label">Game Details</div>
+    <h2>About the Game</h2>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <div class="detail-label">Genre</div>
+        <div class="detail-value">Strategy Simulation / Dark Comedy</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Platform</div>
+        <div class="detail-value">PC (Windows)</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Developer</div>
+        <div class="detail-value">Subroutine Gaming LLC</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Engine</div>
+        <div class="detail-value">Godot</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Distribution</div>
+        <div class="detail-value">Steam (coming)</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Status</div>
+        <div class="detail-value">In Active Development</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER GAMES -->
+  <section class="section wrap">
+    <div class="section-label">More from Subroutine Gaming</div>
+    <h2>Other Games</h2>
+    <div class="other-games">
+      <a class="other-game-card" href="oil.html">
+        <img class="other-game-thumb" src="img/oil-console.jpg"
+             alt="OIL — DOS terminal console" loading="lazy" />
+        <div class="other-game-title">OIL</div>
+        <div class="other-game-sub">Command-line resource sim · Playable</div>
+      </a>
+      <a class="other-game-card" href="hyper-fixation-station.html">
+        <img class="other-game-thumb" src="img/hyper-fixation-title.jpg"
+             alt="Hyper Fixation Station: Pixel" loading="lazy"
+             />
+        <div class="other-game-title">Hyper Fixation Station <span style="font-size:0.7em;opacity:0.6">:Pixel</span></div>
+        <div class="other-game-sub">Progression / Craft · In Development</div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="footer-brand">Subroutine Gaming</div>
+      <div class="footer-tagline">Code · Build · Evolve</div>
+      <div style="margin-top:12px;"><a href="mailto:support@subroutinegaming.com" style="font-family:var(--font-mono);font-size:0.82rem;color:var(--neon);letter-spacing:0.08em;text-decoration:none;opacity:0.85;">support@subroutinegaming.com</a></div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-url">SubroutineGaming.com</div>
+      <div class="footer-copy">© 2026 Subroutine Gaming LLC. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

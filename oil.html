@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OIL — Command-Line Resource Management Sim | Subroutine Gaming</title>
+  <meta name="description" content="OIL is a command-line energy industry simulation inspired by classic DOS design. Drill, refine, trade, expand. Type commands. Master the system. Built by Subroutine Gaming." />
+  <link rel="canonical" href="https://subroutinegaming.com/oil.html" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .game-hero { padding: 60px 0 50px; position: relative; }
+
+    .game-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .breadcrumb a { color: var(--neon); }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb .sep { margin: 0 8px; opacity: 0.4; }
+
+    .game-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--neon);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .game-eyebrow::before { content: '[ '; }
+    .game-eyebrow::after  { content: ' ]'; }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+      color: #ffffff;
+    }
+
+    .game-tagline-large {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--neon);
+      margin-bottom: 18px;
+      letter-spacing: 0.02em;
+    }
+
+    .game-desc-long {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      max-width: 60ch;
+    }
+
+    .chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+
+    /* SCREENSHOT FRAME — styled like a real monitor */
+    .screen-frame {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0a0a0a;
+      line-height: 0;
+    }
+
+    .screen-frame::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, rgba(127,211,107,0.4), transparent, rgba(0,255,136,0.2)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .screen-frame img {
+      width: 100%;
+      display: block;
+    }
+
+    /* DETAIL GRID */
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-block {
+      padding: 22px 24px 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* OTHER GAMES */
+    .other-games { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .other-game-card {
+      flex: 1;
+      min-width: 200px;
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .other-game-card:hover {
+      border-color: var(--border-bright);
+      box-shadow: 0 0 24px rgba(127, 211, 107, 0.06);
+    }
+
+    .other-game-thumb {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 3px;
+      margin-bottom: 12px;
+      filter: saturate(0.7);
+      transition: filter 0.2s;
+    }
+
+    .other-game-card:hover .other-game-thumb { filter: saturate(0.95); }
+
+    .other-game-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .other-game-sub {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 900px) {
+      .game-hero-grid { grid-template-columns: 1fr; }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="img/logo.png" alt="Subroutine Gaming logo" width="36" height="36" />
+      <span>Subroutine <span style="opacity:0.6">Gaming</span></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html#games"><span>Games</span></a>
+      <a href="index.html#universe"><span>Universe</span></a>
+      <a href="index.html#music"><span>Music</span></a>
+      <a href="index.html#about"><span>Manifesto</span></a>
+      <a href="index.html#contact"><span>Contact</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="game-hero wrap">
+    <div class="breadcrumb">
+      <a href="index.html">SubroutineGaming.com</a>
+      <span class="sep">/</span>
+      <a href="index.html#games">Games</a>
+      <span class="sep">/</span>
+      OIL
+    </div>
+
+    <div class="game-hero-grid">
+      <div>
+        <div class="game-eyebrow">Resource Sim · CLI · DOS-Inspired · PC</div>
+        <h1>OIL</h1>
+        <div class="game-tagline-large">Command-line resource management with old-school attitude.</div>
+        <div class="game-status playable" style="margin-bottom:20px;">
+          <span class="game-status-dot"></span>
+          Playable — Demo Planned
+        </div>
+        <p class="game-desc-long">Drill, refine, trade, expand. A stripped-down management game inspired by classic DOS design — built around typed commands, system mastery, and the satisfaction of making numbers move in the right direction.</p>
+        <p class="game-desc-long">No hand-holding. No tutorial pop-ups. Type HELP and figure it out. The interface is the game.</p>
+        <div class="chip-row">
+          <span class="chip highlight">Playable now</span>
+          <span class="chip highlight">Demo planned</span>
+          <span class="chip">Steam page soon</span>
+          <span class="chip">Resource Sim</span>
+          <span class="chip">CLI</span>
+          <span class="chip">PC</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="screen-frame">
+          <img src="img/oil-console.jpg"
+               alt="OIL game — retro DOS-style terminal console with green phosphor text on grey CRT screen. Shows Phoenix BIOS startup, directory listing, and OIL.EXE command prompt."
+               width="840" height="560"
+               style="width:100%; height:auto; display:block;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="section wrap">
+    <div class="section-label">Game Details</div>
+    <h2>About the Game</h2>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <div class="detail-label">Genre</div>
+        <div class="detail-value">Resource Management / CLI Sim</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Platform</div>
+        <div class="detail-value">PC (Windows)</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Developer</div>
+        <div class="detail-value">Subroutine Gaming LLC</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Inspiration</div>
+        <div class="detail-value">Classic DOS design, old-school sims</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Distribution</div>
+        <div class="detail-value">Steam (coming), itch.io</div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">Status</div>
+        <div class="detail-value">Playable — Demo in Development</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER GAMES -->
+  <section class="section wrap">
+    <div class="section-label">More from Subroutine Gaming</div>
+    <h2>Other Games</h2>
+    <div class="other-games">
+      <a class="other-game-card" href="corporate-entropy.html">
+        <img class="other-game-thumb" src="img/corporate-entropy-art.jpg"
+             alt="Corporate Entropy" loading="lazy" />
+        <div class="other-game-title">Corporate Entropy</div>
+        <div class="other-game-sub">Strategy / Satire · In Development</div>
+      </a>
+      <a class="other-game-card" href="hyper-fixation-station.html">
+        <img class="other-game-thumb" src="img/hyper-fixation-title.jpg"
+             alt="Hyper Fixation Station: Pixel" loading="lazy" />
+        <div class="other-game-title">Hyper Fixation Station <span style="font-size:0.7em;opacity:0.6">:Pixel</span></div>
+        <div class="other-game-sub">Progression / Craft · In Development</div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="footer-brand">Subroutine Gaming</div>
+      <div class="footer-tagline">Code · Build · Evolve</div>
+      <div style="margin-top:12px;"><a href="mailto:support@subroutinegaming.com" style="font-family:var(--font-mono);font-size:0.82rem;color:var(--neon);letter-spacing:0.08em;text-decoration:none;opacity:0.85;">support@subroutinegaming.com</a></div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-url">SubroutineGaming.com</div>
+      <div class="footer-copy">© 2026 Subroutine Gaming LLC. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

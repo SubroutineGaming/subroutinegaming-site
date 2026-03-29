@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>STRATA — Book Cover</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111; display: flex; justify-content: center; padding: 40px 20px; }
+  .cover {
+    position: relative;
+    width: 680px;
+    height: 1020px;
+    background: #000;
+    overflow: hidden;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  .strata-top-1 { position: absolute; top: 0; left: 0; right: 0; height: 200px;
+    background: linear-gradient(to bottom, #0a0a12 0%, #050508 60%, transparent 100%); }
+  .strata-top-2 { position: absolute; top: 155px; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, transparent, #c8a030 20%, #e8d090 50%, #c8a030 80%, transparent); opacity: 0.5; }
+  .strata-top-3 { position: absolute; top: 162px; left: 0; right: 0; height: 1.5px;
+    background: linear-gradient(to right, transparent, #e8e8f0 20%, #fff 50%, #e8e8f0 80%, transparent); opacity: 0.4; }
+  .strata-top-4 { position: absolute; top: 167px; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, transparent, #b88820 20%, #d4a840 50%, #b88820 80%, transparent); opacity: 0.35; }
+  .strata-top-5 { position: absolute; top: 172px; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, #c8c090 20%, #e0d8a0 50%, #c8c090 80%, transparent); opacity: 0.3; }
+  .strata-top-6 { position: absolute; top: 177px; left: 0; right: 0; height: 1.5px;
+    background: linear-gradient(to right, transparent, #8a6010 20%, #c89020 50%, #8a6010 80%, transparent); opacity: 0.25; }
+
+  .strata-bot-1 { position: absolute; bottom: 200px; left: 0; right: 0; height: 1.5px;
+    background: linear-gradient(to right, transparent, #8a6010 20%, #c89020 50%, #8a6010 80%, transparent); opacity: 0.25; }
+  .strata-bot-2 { position: absolute; bottom: 193px; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, #c8c090 20%, #e0d8a0 50%, #c8c090 80%, transparent); opacity: 0.3; }
+  .strata-bot-3 { position: absolute; bottom: 187px; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, transparent, #b88820 20%, #d4a840 50%, #b88820 80%, transparent); opacity: 0.35; }
+  .strata-bot-4 { position: absolute; bottom: 181px; left: 0; right: 0; height: 1.5px;
+    background: linear-gradient(to right, transparent, #e8e8f0 20%, #fff 50%, #e8e8f0 80%, transparent); opacity: 0.4; }
+  .strata-bot-5 { position: absolute; bottom: 175px; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, transparent, #c8a030 20%, #e8d090 50%, #c8a030 80%, transparent); opacity: 0.5; }
+  .strata-bot-6 { position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+    background: linear-gradient(to top, #0a0a12 0%, #050508 60%, transparent 100%); }
+
+  .auros-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 580px;
+    height: 580px;
+    object-fit: contain;
+    opacity: 0.95;
+  }
+
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse at center,
+      rgba(200, 150, 40, 0.12) 0%,
+      rgba(180, 120, 20, 0.06) 40%,
+      transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .border-outer {
+    position: absolute;
+    top: 24px; left: 24px; right: 24px; bottom: 24px;
+    border: 1px solid rgba(180, 140, 40, 0.25);
+    pointer-events: none;
+  }
+  .border-inner {
+    position: absolute;
+    top: 28px; left: 28px; right: 28px; bottom: 28px;
+    border: 1px solid rgba(120, 90, 20, 0.15);
+    pointer-events: none;
+  }
+
+  .title-area {
+    position: absolute;
+    top: 38px;
+    left: 0; right: 0;
+    text-align: center;
+  }
+  .title {
+    font-size: 96px;
+    font-weight: 400;
+    letter-spacing: 20px;
+    background: linear-gradient(to bottom,
+      #f0ece0 0%,
+      #e8e0c0 15%,
+      #d4c070 30%,
+      #c8a030 50%,
+      #b07818 70%,
+      #8a5808 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    text-shadow: none;
+    padding-left: 20px;
+  }
+  .title-rule-left {
+    position: absolute;
+    top: 108px; left: 80px;
+    width: 170px; height: 1px;
+    background: linear-gradient(to right, transparent, #c8a030 60%, #e8e8f0);
+    opacity: 0.55;
+  }
+  .title-rule-right {
+    position: absolute;
+    top: 108px; right: 80px;
+    width: 170px; height: 1px;
+    background: linear-gradient(to left, transparent, #c8a030 60%, #e8e8f0);
+    opacity: 0.55;
+  }
+  .subtitle {
+    font-size: 11px;
+    letter-spacing: 7px;
+    color: #8a6820;
+    margin-top: 10px;
+    opacity: 0.85;
+    padding-left: 7px;
+  }
+
+  .author-area {
+    position: absolute;
+    bottom: 52px;
+    left: 0; right: 0;
+    text-align: center;
+  }
+  .author-rule {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #6a4a10, transparent);
+    margin: 0 auto 10px;
+    opacity: 0.5;
+  }
+  .author {
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: #9a7828;
+    padding-left: 5px;
+    opacity: 0.9;
+  }
+  .publisher {
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: #4a3208;
+    margin-top: 8px;
+    padding-left: 3px;
+    opacity: 0.6;
+  }
+
+  .script-left {
+    position: absolute;
+    left: 36px;
+    top: 320px;
+    font-family: Georgia, serif;
+    font-size: 7px;
+    color: #4a3008;
+    opacity: 0.35;
+    line-height: 1.8;
+    letter-spacing: 1px;
+  }
+  .script-right {
+    position: absolute;
+    right: 36px;
+    top: 420px;
+    font-family: Georgia, serif;
+    font-size: 7px;
+    color: #4a3008;
+    opacity: 0.3;
+    line-height: 1.8;
+    letter-spacing: 1px;
+    text-align: right;
+  }
+  .script-bottom {
+    position: absolute;
+    bottom: 36px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 7px;
+    color: #3a2206;
+    opacity: 0.3;
+    letter-spacing: 3px;
+  }
+</style>
+</head>
+<body>
+<div class="cover">
+
+  <div class="strata-top-1"></div>
+  <div class="strata-top-2"></div>
+  <div class="strata-top-3"></div>
+  <div class="strata-top-4"></div>
+  <div class="strata-top-5"></div>
+  <div class="strata-top-6"></div>
+
+  <div class="glow"></div>
+  <img class="auros-image" src="img/strata-cover.jpg" alt="AUROS"/>
+
+  <div class="strata-bot-1"></div>
+  <div class="strata-bot-2"></div>
+  <div class="strata-bot-3"></div>
+  <div class="strata-bot-4"></div>
+  <div class="strata-bot-5"></div>
+  <div class="strata-bot-6"></div>
+
+  <div class="border-outer"></div>
+  <div class="border-inner"></div>
+
+  <div class="title-area">
+    <div class="title">STRATA</div>
+    <div class="title-rule-left"></div>
+    <div class="title-rule-right"></div>
+    <div class="subtitle">A &nbsp; N O V E L</div>
+  </div>
+
+  <div class="script-left">&#x2C00;&#x2C01;&#x2C02;&#x2C03;&#x2C04;<br>&#x2C05;&#x2C06;&#x2C07;&#x2C08;<br>&#x2C09;&#x2C0A;&#x2C0B;&#x2C0C;<br>&#x2C0D;&#x2C0E;&#x2C0F;&#x2C10;</div>
+  <div class="script-right">&#x2C11;&#x2C12;&#x2C13;<br>&#x2C14;&#x2C15;&#x2C16;&#x2C17;<br>&#x2C18;&#x2C19;&#x2C1A;<br>&#x2C1B;&#x2C1C;&#x2C1D;</div>
+
+  <div class="author-area">
+    <div class="author-rule"></div>
+    <div class="author">DANIEL D. BAILEY II</div>
+    <div class="publisher">SUBROUTINE GAMING LLC</div>
+  </div>
+
+  <div class="script-bottom">&#x2C00;&#x2C01;&#x2C02;&#x2C03;&#x2C04;&#x2C05;&#x2C06;&#x2C07;&#x2C08;&#x2C09;&#x2C0A;&#x2C0B;&#x2C0C;&#x2C0D;&#x2C0E;&#x2C0F;&#x2C10;&#x2C11;&#x2C12;&#x2C13;&#x2C14;&#x2C15;</div>
+
+</div>
+</body>
+</html>
