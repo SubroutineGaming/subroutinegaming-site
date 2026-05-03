@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Subroutine Gaming — Indie PC Games | Small Games. Sharp Systems.</title>
-  <meta name="description" content="Subroutine Gaming LLC — indie PC game studio building strategy sims, CLI throwbacks, and experimental games. Corporate Entropy, OIL, Hyper Fixation Station: Pixel." />
+  <meta name="description" content="Subroutine Gaming LLC — indie PC game studio. Corporate Entropy coming Q3 2026 on Steam. Strategy sims, CLI throwbacks, and experimental games." />
   <link rel="canonical" href="https://subroutinegaming.com/" />
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -178,6 +178,21 @@
       position: relative;
       text-decoration: none;
       color: inherit;
+      cursor: pointer;
+    }
+
+    /* overlay makes the whole card clickable without nesting <a> tags */
+    .game-card .card-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    /* Steam button and other links sit above the overlay */
+    .game-card .game-actions,
+    .game-card .game-card-link-hint {
+      position: relative;
+      z-index: 2;
     }
 
     .game-card:hover {
@@ -266,6 +281,9 @@
 
     .game-status.concept { color: #8a7a9a; }
     .game-status.concept .game-status-dot { background: #8a7a9a; box-shadow: none; }
+
+    .stream-btn.steam { color: #c7d5e0; border-color: rgba(199,213,224,0.4); background: rgba(199,213,224,0.05); }
+    .stream-btn.steam:hover { background: rgba(199,213,224,0.12); border-color: #c7d5e0; box-shadow: 0 0 20px rgba(199,213,224,0.15); transform: translateY(-2px); }
 
     /* UNIVERSE SECTION */
     .universe-section {
@@ -595,12 +613,13 @@
   <section class="section wrap" id="games">
     <div class="section-label">Projects</div>
     <h2>Games</h2>
-    <p class="section-meta">Three distinct projects. One shared philosophy: build something memorable instead of something generic.</p>
+    <p class="section-meta">Four distinct projects. One shared philosophy: build something memorable instead of something generic.</p>
 
     <div class="games-list">
 
       <!-- Corporate Entropy -->
-      <a class="game-card" href="corporate-entropy.html">
+      <div class="game-card" onclick="location.href='corporate-entropy.html'">
+        <a class="card-overlay" href="corporate-entropy.html" aria-label="View Corporate Entropy details"></a>
         <div class="game-card-visual">
           <img src="img/corporate-entropy-art.jpg"
                alt="Corporate Entropy — neural processing sphere suspended in a brutalist surveillance office"
@@ -611,24 +630,25 @@
           <div class="corner-deco br"></div>
         </div>
         <div class="game-card-body">
-          <div class="game-status soon">
+          <div class="game-status playable">
             <span class="game-status-dot"></span>
-            In Development
+            Coming Soon — Q3 2026
           </div>
           <h3 class="game-title">Corporate Entropy</h3>
-          <div class="game-tagline">Survive the machine by becoming part of it.</div>
-          <p class="game-desc">A satirical strategy simulation about managing impossible expectations and navigating increasingly absurd workplace systems. Keep the corporate engine running just long enough to avoid being consumed by it.</p>
+          <div class="game-tagline">The revolution will be managed from within.</div>
+          <p class="game-desc">A satirical strategy simulation about surviving the slow-motion collapse of your workplace. Eight quarters. Your coworkers are being replaced one by one. Keep your numbers up while quietly helping the resistance bring down the AI eating your company from the inside.</p>
           <div class="game-actions">
-            <span class="chip highlight">Steam page coming</span>
+            <a class="stream-btn steam" href="https://store.steampowered.com/app/4661010/Corporate_Entropy/" target="_blank" rel="noopener noreferrer">♦ Wishlist on Steam</a>
             <span class="chip">Strategy / Satire</span>
             <span class="chip">PC</span>
           </div>
           <div class="game-card-link-hint">→ View game details</div>
         </div>
-      </a>
+      </div>
 
       <!-- OIL -->
-      <a class="game-card" href="oil.html">
+      <div class="game-card" onclick="location.href='oil.html'">
+        <a class="card-overlay" href="oil.html" aria-label="View OIL details"></a>
         <div class="game-card-visual">
           <img src="img/oil-console.jpg"
                alt="OIL — retro DOS terminal console with green phosphor text showing the OIL.EXE energy industry simulation"
@@ -653,10 +673,11 @@
           </div>
           <div class="game-card-link-hint">→ View game details</div>
         </div>
-      </a>
+      </div>
 
       <!-- HFS:Pixel -->
-      <a class="game-card" href="hyper-fixation-station.html">
+      <div class="game-card" onclick="location.href='hyper-fixation-station.html'">
+        <a class="card-overlay" href="hyper-fixation-station.html" aria-label="View Hyper Fixation Station details"></a>
         <div class="game-card-visual">
           <img src="img/hyper-fixation-title.jpg"
                alt="Hyper Fixation Station: Pixel — title screen on black background with white and cyan typography"
@@ -681,7 +702,7 @@
           </div>
           <div class="game-card-link-hint">→ View game details</div>
         </div>
-      </a>
+      </div>
 
       <!-- Strata -->
       <div class="game-card" style="cursor:default;">
