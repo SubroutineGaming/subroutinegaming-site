@@ -401,73 +401,47 @@
       .universe-grid { grid-template-columns: 1fr; }
       .novel-cover-frame { max-width: 180px; }
     }
+    /* SOUNDTRACK PLAYER */
     .soundtrack-section {
       padding: 10px 0 60px;
       border-top: 1px solid var(--border);
     }
 
-    .soundtrack-card {
+    .soundtrack-player-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .soundtrack-player-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 16px 20px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 6px;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
-    .soundtrack-card:hover {
-      border-color: var(--border-bright);
-      box-shadow: 0 0 40px rgba(127, 211, 107, 0.07);
-    }
-
-    .soundtrack-cover {
-      position: relative;
-      background: #060c16;
-      overflow: hidden;
-    }
-
-    .soundtrack-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: saturate(0.9) contrast(1.05);
-    }
-
-    .soundtrack-body {
-      padding: 28px 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .soundtrack-title {
+    .soundtrack-meta-title {
       font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: 1.1rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: #fff;
-      margin: 0 0 6px;
+      margin-bottom: 4px;
     }
 
-    .soundtrack-meta {
+    .soundtrack-meta-sub {
       font-family: var(--font-mono);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
-      margin-bottom: 16px;
     }
 
-    .soundtrack-desc {
-      font-family: var(--font-mono);
-      font-size: 0.88rem;
-      color: var(--text-dim);
-      line-height: 1.75;
-      margin: 0 0 22px;
-    }
-
-    .soundtrack-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .soundtrack-links { display: flex; gap: 10px; flex-wrap: wrap; }
 
     /* PHILOSOPHY */
     .philosophy {
@@ -525,8 +499,6 @@
       .hero-grid { grid-template-columns: 1fr; }
       .hero-visual { max-width: 320px; margin: 0 auto; }
       .game-card { grid-template-columns: 1fr; }
-      .soundtrack-card { grid-template-columns: 1fr; }
-      .soundtrack-cover { min-height: 200px; max-height: 260px; }
       .philosophy-grid { grid-template-columns: 1fr; gap: 32px; }
     }
 
@@ -632,12 +604,13 @@
         <div class="game-card-body">
           <div class="game-status playable">
             <span class="game-status-dot"></span>
-            Coming Soon — Q3 2026
+            Demo June 15 · Full Release July 1, 2026
           </div>
           <h3 class="game-title">Corporate Entropy</h3>
           <div class="game-tagline">The revolution will be managed from within.</div>
           <p class="game-desc">A satirical strategy simulation about surviving the slow-motion collapse of your workplace. Eight quarters. Your coworkers are being replaced one by one. Keep your numbers up while quietly helping the resistance bring down the AI eating your company from the inside.</p>
           <div class="game-actions">
+            <a class="stream-btn steam" href="https://store.steampowered.com/app/4709320/Corporate_Entropy_Demo" target="_blank" rel="noopener noreferrer">▶ Free Demo</a>
             <a class="stream-btn steam" href="https://store.steampowered.com/app/4661010/Corporate_Entropy/" target="_blank" rel="noopener noreferrer">♦ Wishlist on Steam</a>
             <span class="chip">Strategy / Satire</span>
             <span class="chip">PC</span>
@@ -661,15 +634,16 @@
         <div class="game-card-body">
           <div class="game-status playable">
             <span class="game-status-dot"></span>
-            Playable
+            Free to Play — June 15, 2026
           </div>
-          <h3 class="game-title">OIL</h3>
-          <div class="game-tagline">Command-line resource management with old-school attitude.</div>
-          <p class="game-desc">Drill, refine, trade, expand. A stripped-down management game inspired by classic DOS design — built around typed commands, system mastery, and the satisfaction of making numbers move in the right direction.</p>
+          <h3 class="game-title">OIL.EXE</h3>
+          <div class="game-tagline">Drill the wells. Run the refinery. Read the market.</div>
+          <p class="game-desc">A free text-based petroleum industry simulation played at a 1980s green-phosphor terminal. Sign a contract, drill a procedurally generated field, build a refinery operation, and play the commodity market. End each year richer or bankrupt.</p>
           <div class="game-actions">
-            <span class="chip highlight">Demo planned</span>
-            <span class="chip">Steam page soon</span>
-            <span class="chip">Resource Sim / CLI</span>
+            <a class="stream-btn steam" href="https://store.steampowered.com/app/4709640/OILEXE" target="_blank" rel="noopener noreferrer">▶ Play Free on Steam</a>
+            <span class="chip">Free to Play</span>
+            <span class="chip">Text Sim / CLI</span>
+            <span class="chip">PC · Mac · Linux</span>
           </div>
           <div class="game-card-link-hint">→ View game details</div>
         </div>
@@ -768,31 +742,32 @@
     <h2>Music</h2>
     <p class="section-meta">The Corporate Entropy Original Soundtrack — 29 tracks of industrial ambience, corporate dread, and system collapse.</p>
 
-    <div class="soundtrack-card">
-      <div class="soundtrack-cover">
-        <img src="img/corporate-entropy-ost.jpg"
-             alt="Corporate Entropy Original Soundtrack cover — neural sphere office scene with album typography"
-             loading="lazy" />
-      </div>
-      <div class="soundtrack-body">
-        <div class="game-status soon" style="margin-bottom:12px;">
-          <span class="game-status-dot"></span>
-          Now Streaming
+    <div class="soundtrack-player-wrap">
+      <iframe
+        src="https://open.spotify.com/embed/album/7j0kpa7R0iMvcZ9ocwBJDZ?utm_source=generator&theme=0"
+        width="100%"
+        height="380"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        style="border-radius:8px; border:1px solid rgba(127,211,107,0.15); display:block;">
+      </iframe>
+      <div class="soundtrack-player-meta">
+        <div>
+          <div class="soundtrack-meta-title">Corporate Entropy — Original Soundtrack</div>
+          <div class="soundtrack-meta-sub">29 Tracks &nbsp;·&nbsp; Subroutine Gaming &nbsp;·&nbsp; Streaming now · On Steam July 1, 2026</div>
         </div>
-        <h3 class="soundtrack-title">Corporate Entropy</h3>
-        <div class="soundtrack-meta">Original Soundtrack &nbsp;·&nbsp; 29 Tracks &nbsp;·&nbsp; Subroutine Gaming</div>
-        <p class="soundtrack-desc">Composed to accompany the satirical strategy sim of the same name. Industrial textures, procedural ambience, and the quiet sound of an organization consuming itself. Available on most major platforms.</p>
         <div class="soundtrack-links">
+          <a class="stream-btn steam"
+             href="https://store.steampowered.com/app/4780600/Corporate_Entropy_Soundtrack"
+             target="_blank" rel="noopener noreferrer">♦ Steam DLC</a>
           <a class="stream-btn spotify"
              href="https://open.spotify.com/album/7j0kpa7R0iMvcZ9ocwBJDZ"
-             target="_blank" rel="noopener noreferrer">
-            ▶ Spotify
-          </a>
+             target="_blank" rel="noopener noreferrer">▶ Spotify</a>
           <a class="stream-btn amazon"
              href="https://music.amazon.com/albums/B0GV9MK17N"
-             target="_blank" rel="noopener noreferrer">
-            ▶ Amazon Music
-          </a>
+             target="_blank" rel="noopener noreferrer">▶ Amazon Music</a>
         </div>
       </div>
     </div>
